@@ -268,6 +268,9 @@ async function addMarkers() {
   return markers_google_maps_objects;
 }
 
+var w = document.documentElement.clientWidth || window.innerWidth;
+const is_mobile = w <= 600;
+
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
@@ -279,7 +282,7 @@ async function initMap() {
       strictBounds: false,
     },
     clickableIcons: false, // this is to disable all labels icons except your custom infowindow or Infobox.
-    zoom: 7.9,
+    zoom: is_mobile ? 6.9 : 7.9,
     zoomControl: true,
     maxZoom: 11,
     minZoom: 6,
