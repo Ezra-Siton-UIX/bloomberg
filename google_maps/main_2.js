@@ -1,6 +1,5 @@
 console.clear();
-
-/* heloooooooooooo - set map English vs Hebrew */
+/* set map English vs Hebrew */
 const map_node = document.getElementById("map");
 let rtl = map_node.getAttribute("map_direction");
 rtl = rtl == "rtl" ? true : false;
@@ -12,12 +11,12 @@ rtl = rtl == "rtl" ? true : false;
 // 4 of 4 - Helper Functions
 /*
 
-  /* IMPORTANT 
-  לזכור מבלבל - יש לכפתורי סינון 2 מקומות לטיפול - במקום אחד זה מסתיר/מציג מרקרים במקום אחר זה משנה את התוכן בתור המרקר עצמו
-  */
+    /* IMPORTANT 
+    לזכור מבלבל - יש לכפתורי סינון 2 מקומות לטיפול - במקום אחד זה מסתיר/מציג מרקרים במקום אחר זה משנה את התוכן בתור המרקר עצמו
+    */
 /*#######################################################################################
-            1 of 4 - Pull the data from HTML (1.Persons, 2.cities, 3.semesters)
-    #########################################################################################*/
+              1 of 4 - Pull the data from HTML (1.Persons, 2.cities, 3.semesters)
+      #########################################################################################*/
 
 /* use to show/hide markers in the future */
 var markers_google_maps_objects = [];
@@ -27,11 +26,10 @@ window.onload = function () {
   initMap();
 };
 
-const generate_button = document.querySelector("[generate]");
-const add_person_button = document.querySelector("[generate]");
-
-if (generate_button !== null) {
-  generate_button.addEventListener("click", function () {
+const $generate_btn = document.querySelector("[generate]");
+const $add_person_btn = document.querySelector("[add]");
+if ($generate_btn !== null) {
+  document.querySelector("[generate]").addEventListener("click", function () {
     markersOnMap_array = []; // tel aviv, haifa //
     persons_arr = []; // avi levy, orna ben //
     semesters_arr = []; // "semester A" //
@@ -41,7 +39,7 @@ if (generate_button !== null) {
   });
 }
 
-if (add_person_button !== null) {
+if ($add_person_btn) {
   document.querySelector("[add]").addEventListener("click", function () {
     const ele = document.getElementById("persons");
     const newDiv = document.createElement("li");
@@ -147,15 +145,15 @@ function get_Data_Attribute(item, property_name) {
 }
 
 /*#######################################################################################
-                                     2 of 4  - GOOGLE MAPS
-#########################################################################################*/
+                                       2 of 4  - GOOGLE MAPS
+  #########################################################################################*/
 
 var map;
 var InforObj = [];
-let map_zoom_level = 4;
+let map_zoom_level = 5;
 /* map deafult Coordinates loaction */
 const centerCords = {
-  lat: 31.774469081691855,
+  lat: 31.54,
   lng: 34.86864294563691,
 };
 
@@ -276,11 +274,18 @@ async function initMap() {
 
   map = new Map(document.getElementById("map"), {
     mapId: "ab8da44af7b29d1",
-
+    restriction: {
+      latLngBounds: israel_BOUNDS,
+      strictBounds: false,
+    },
     clickableIcons: false, // this is to disable all labels icons except your custom infowindow or Infobox.
-    zoom: 8,
-    maxZoom: 12,
+    zoom: 7.9,
+    zoomControl: true,
+    maxZoom: 11,
+    minZoom: 6,
+    maxWidth: 300,
     disableDefaultUI: true, // a way to quickly hide all controls
+    zoomControl: true,
     center: centerCords,
     //styles: ==>styles under Google Cloud Styles Editor //
   });
@@ -355,14 +360,14 @@ function showMarker(marker, map) {
 }
 
 /*#######################################################################################
-                                    3 of 4 - Render InfoWindow
-    #########################################################################################*/
+                                      3 of 4 - Render InfoWindow
+      #########################################################################################*/
 
 //## Render 1 ## //
 /*
-טריקי - יצרתי לופ שיוצר רשימה לכל עיר ופילטר -
-יהיה קשה מאוד ליצור כזה למקרה של גם וגם
-*/
+  טריקי - יצרתי לופ שיוצר רשימה לכל עיר ופילטר -
+  יהיה קשה מאוד ליצור כזה למקרה של גם וגם
+  */
 /* infoWindow_contentString */
 function render_infoWindow_contentString(marker_on_the_map, filter = "all") {
   /** createElement **/
@@ -472,8 +477,8 @@ function render_infowindow_city_title(this_city, node) {
 }
 
 /*#######################################################################################
-                                    4 of 4 - Helper Functions
-    #########################################################################################*/
+                                      4 of 4 - Helper Functions
+      #########################################################################################*/
 
 /* check if semester exsist in a city */
 function semester_exist_in_this_city(index, semester) {
@@ -518,15 +523,15 @@ function get_list_from_city(city) {
 }
 
 /*
-                            let show_marker;
-                          let compare_value = "red";
+                              let show_marker;
+                            let compare_value = "red";
 
-                          _.map(persons_list_for_this_city, function (person) {
-                            let exist = _.includes(person, compare_value);
-                            if(exist == true){
-                              show_marker = true;
-                            }
-                          });
+                            _.map(persons_list_for_this_city, function (person) {
+                              let exist = _.includes(person, compare_value);
+                              if(exist == true){
+                                show_marker = true;
+                              }
+                            });
 
-                          if(!show_marker)hideMarker(markers_after_init[1]);
-                          */
+                            if(!show_marker)hideMarker(markers_after_init[1]);
+                            */
