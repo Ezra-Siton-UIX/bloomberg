@@ -1,8 +1,4 @@
 console.clear();
-
-var w = document.documentElement.clientWidth || window.innerWidth;
-const is_mobile = w <= 600;
-
 /* set map English vs Hebrew */
 const map_node = document.getElementById("map");
 let rtl = map_node.getAttribute("map_direction");
@@ -15,12 +11,12 @@ rtl = rtl == "rtl" ? true : false;
 // 4 of 4 - Helper Functions
 /*
 
-    /* IMPORTANT 
-    לזכור מבלבל - יש לכפתורי סינון 2 מקומות לטיפול - במקום אחד זה מסתיר/מציג מרקרים במקום אחר זה משנה את התוכן בתור המרקר עצמו
-    */
+      /* IMPORTANT 
+      לזכור מבלבל - יש לכפתורי סינון 2 מקומות לטיפול - במקום אחד זה מסתיר/מציג מרקרים במקום אחר זה משנה את התוכן בתור המרקר עצמו
+      */
 /*#######################################################################################
-              1 of 4 - Pull the data from HTML (1.Persons, 2.cities, 3.semesters)
-      #########################################################################################*/
+                1 of 4 - Pull the data from HTML (1.Persons, 2.cities, 3.semesters)
+        #########################################################################################*/
 
 /* use to show/hide markers in the future */
 var markers_google_maps_objects = [];
@@ -50,13 +46,13 @@ if ($add_person_btn) {
     newDiv.setAttribute("data-item", "data-item");
 
     newDiv.innerHTML = `
-      <b data-city="Jerusalem">Jerusalem</b> •
-      <i data-name="Bobi bob">Bobi ${Math.random()}</i>
-      <i data-name_he="${Math.random()}ירושליים">בובי </i>
-      <i data-position="Red">Red</i>
-      <i data-position_he="מנהל עבודה">מנהל עבודה</i>
-      <i data-semester="A-wow">A</i>
-              `;
+        <b data-city="Jerusalem">Jerusalem</b> •
+        <i data-name="Bobi bob">Bobi ${Math.random()}</i>
+        <i data-name_he="${Math.random()}ירושליים">בובי </i>
+        <i data-position="Red">Red</i>
+        <i data-position_he="מנהל עבודה">מנהל עבודה</i>
+        <i data-semester="A-wow">A</i>
+                `;
     ele.appendChild(newDiv);
   });
 }
@@ -105,6 +101,8 @@ function generate_persons() {
     obj.position = get_Data_Attribute(person, "position");
     obj.position_he = get_Data_Attribute(person, "position_he");
     obj.semester = get_Data_Attribute(person, "semester");
+    obj.prime_position = get_Data_Attribute(person, "prime_position");
+
     persons_arr.push(obj);
   }); /* end forEach */
 }
@@ -149,15 +147,15 @@ function get_Data_Attribute(item, property_name) {
 }
 
 /*#######################################################################################
-                                       2 of 4  - GOOGLE MAPS
-  #########################################################################################*/
+                                         2 of 4  - GOOGLE MAPS
+    #########################################################################################*/
 
 var map;
 var InforObj = [];
 let map_zoom_level = 5;
 /* map deafult Coordinates loaction */
 const centerCords = {
-  lat: is_mobile ? 31.64 : 31.54,
+  lat: 31.54,
   lng: 34.86864294563691,
 };
 
@@ -170,15 +168,16 @@ const israel_BOUNDS = {
 
 async function addMarkers() {
   const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement, PinElement } =
-    await google.maps.importLibrary("marker");
+  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+    "marker"
+  );
 
   let $show_b_btn;
 
   /* Create markers loop */
   for (var i = 0; i < markersOnMap_array.length; i++) {
     let persons_list_for_this_city = get_list_from_city(
-      markersOnMap_array[i].city,
+      markersOnMap_array[i].city
     );
     console.log(persons_list_for_this_city.length);
 
@@ -204,14 +203,14 @@ async function addMarkers() {
       /*render_infoWindow_contentString(city, sememster_name)*/
       const this_content = render_infoWindow_contentString(
         markersOnMap_array[i],
-        this_semester.name,
+        this_semester.name
       );
       content_strings_for_each_semester.push(this_content);
     }); /* end each semsester */
 
     let contentString_all_semesters = render_infoWindow_contentString(
       markersOnMap_array[i],
-      "all",
+      "all"
     );
 
     infoWindow.setContent(contentString_all_semesters);
@@ -242,7 +241,7 @@ async function addMarkers() {
     } else {
       console.error(
         "Marker not added => No persons under: ",
-        markersOnMap_array[i].city,
+        markersOnMap_array[i].city
       );
     }
 
@@ -256,7 +255,7 @@ async function addMarkers() {
     }
 
     const content_inside_infoWindow_filter_BUTTONS = document.querySelectorAll(
-      "[button_group] button:not([show_all])",
+      "[button_group] button:not([show_all])"
     );
     for (let i = 0; i < content_inside_infoWindow_filter_BUTTONS.length; i++) {
       content_inside_infoWindow_filter_BUTTONS[i].addEventListener(
@@ -264,13 +263,16 @@ async function addMarkers() {
         function () {
           closeOtherInfo();
           infoWindow.setContent(content_strings_for_each_semester[i]);
-        },
+        }
       );
     }
   } /* end marker creation loop */
 
   return markers_google_maps_objects;
 }
+
+var w = document.documentElement.clientWidth || window.innerWidth;
+const is_mobile = w <= 600;
 
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
@@ -283,11 +285,11 @@ async function initMap() {
       strictBounds: false,
     },
     clickableIcons: false, // this is to disable all labels icons except your custom infowindow or Infobox.
-    zoom: is_mobile ? 7.8 : 7.9,
+    zoom: is_mobile ? 6.9 : 7.9,
     zoomControl: true,
     maxZoom: 11,
     minZoom: 6,
-    maxWidth: is_mobile ? 250 : 300,
+    maxWidth: 300,
     disableDefaultUI: true, // a way to quickly hide all controls
     zoomControl: true,
     center: centerCords,
@@ -307,14 +309,14 @@ async function initMap() {
   let $show_a_btn = document.querySelector("[show_a]");
 
   const filter_marker_on_maps_BUTTONS = document.querySelectorAll(
-    "[button_group] button:not([show_all])",
+    "[button_group] button:not([show_all])"
   );
   for (let i = 0; i < filter_marker_on_maps_BUTTONS.length; i++) {
     filter_marker_on_maps_BUTTONS[i].addEventListener("click", function () {
       if (semesters_arr[i] !== undefined) {
         show_only_semester_this_semester(
           markers_after_init,
-          semesters_arr[i].name,
+          semesters_arr[i].name
         );
       } else {
         console.error("No Such Semester", this.innerText);
@@ -364,14 +366,14 @@ function showMarker(marker, map) {
 }
 
 /*#######################################################################################
-                                      3 of 4 - Render InfoWindow
-      #########################################################################################*/
+                                        3 of 4 - Render InfoWindow
+        #########################################################################################*/
 
 //## Render 1 ## //
 /*
-  טריקי - יצרתי לופ שיוצר רשימה לכל עיר ופילטר -
-  יהיה קשה מאוד ליצור כזה למקרה של גם וגם
-  */
+    טריקי - יצרתי לופ שיוצר רשימה לכל עיר ופילטר -
+    יהיה קשה מאוד ליצור כזה למקרה של גם וגם
+    */
 /* infoWindow_contentString */
 function render_infoWindow_contentString(marker_on_the_map, filter = "all") {
   /** createElement **/
@@ -396,7 +398,7 @@ function render_infoWindow_contentString(marker_on_the_map, filter = "all") {
         key,
         persons_list_for_this_city,
         infowindow_content,
-        this_semester,
+        this_semester
       );
     }
   }); /* end each semsester */
@@ -410,12 +412,21 @@ function render_infowindow_list(
   index_key,
   persons_list_for_this_city,
   infowindow_content,
-  this_semester,
+  this_semester
 ) {
   let once = 0;
   /* semster_wrapper */
   let semster_wrapper;
   let ul;
+
+  /*sort persons and put the mayor in the first place (like yona yahav) */
+  let after_sort_and_put_mayor_first;
+  _.each(persons_list_for_this_city, (this_person, key) => {
+    if (this_person.prime_position == "ראש עיר") {
+      persons_list_for_this_city.splice(key, 1);
+      persons_list_for_this_city.unshift(this_person);
+    }
+  }); /* each */
 
   _.each(persons_list_for_this_city, (this_person, key) => {
     /* [A,B,C] */
@@ -481,8 +492,8 @@ function render_infowindow_city_title(this_city, node) {
 }
 
 /*#######################################################################################
-                                      4 of 4 - Helper Functions
-      #########################################################################################*/
+                                        4 of 4 - Helper Functions
+        #########################################################################################*/
 
 /* check if semester exsist in a city */
 function semester_exist_in_this_city(index, semester) {
@@ -502,7 +513,7 @@ function semester_exist_in_this_city(index, semester) {
 /* check_if_semeter_exsist_for_a_city */
 function check_if_semeter_exsist_for_a_city(
   persons_list_for_this_city,
-  compare_value,
+  compare_value
 ) {
   _.map(persons_list_for_this_city, function (person) {
     console.log("check", person);
@@ -527,15 +538,15 @@ function get_list_from_city(city) {
 }
 
 /*
-                              let show_marker;
-                            let compare_value = "red";
+                                let show_marker;
+                              let compare_value = "red";
 
-                            _.map(persons_list_for_this_city, function (person) {
-                              let exist = _.includes(person, compare_value);
-                              if(exist == true){
-                                show_marker = true;
-                              }
-                            });
+                              _.map(persons_list_for_this_city, function (person) {
+                                let exist = _.includes(person, compare_value);
+                                if(exist == true){
+                                  show_marker = true;
+                                }
+                              });
 
-                            if(!show_marker)hideMarker(markers_after_init[1]);
-                            */
+                              if(!show_marker)hideMarker(markers_after_init[1]);
+                              */
