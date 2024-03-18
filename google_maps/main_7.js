@@ -157,7 +157,7 @@ var InforObj = [];
 let map_zoom_level = 5;
 /* map deafult Coordinates loaction */
 const centerCords = {
-  lat: is_mobile ? 31.3 : 31.54,
+  lat: is_mobile ? 31.54 : 31.54,
   lng: 34.86864294563691,
 };
 
@@ -287,7 +287,7 @@ async function initMap() {
     zoomControl: true,
     maxZoom: 11,
     minZoom: 6,
-    maxWidth: 300,
+    maxWidth: is_mobile ? 250 : 300,
     disableDefaultUI: true, // a way to quickly hide all controls
     zoomControl: true,
     center: centerCords,
