@@ -1,4 +1,8 @@
 console.clear();
+
+var w = document.documentElement.clientWidth || window.innerWidth;
+const is_mobile = w <= 600;
+
 /* set map English vs Hebrew */
 const map_node = document.getElementById("map");
 let rtl = map_node.getAttribute("map_direction");
@@ -153,7 +157,7 @@ var InforObj = [];
 let map_zoom_level = 5;
 /* map deafult Coordinates loaction */
 const centerCords = {
-  lat: 31.54,
+  lat: is_mobile ? 31.0 : 31.54,
   lng: 34.86864294563691,
 };
 
@@ -268,9 +272,6 @@ async function addMarkers() {
   return markers_google_maps_objects;
 }
 
-var w = document.documentElement.clientWidth || window.innerWidth;
-const is_mobile = w <= 600;
-
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
@@ -282,7 +283,7 @@ async function initMap() {
       strictBounds: false,
     },
     clickableIcons: false, // this is to disable all labels icons except your custom infowindow or Infobox.
-    zoom: is_mobile ? 6.9 : 7.9,
+    zoom: is_mobile ? 7 : 7.9,
     zoomControl: true,
     maxZoom: 11,
     minZoom: 6,
