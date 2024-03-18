@@ -283,7 +283,7 @@ async function initMap() {
       strictBounds: false,
     },
     clickableIcons: false, // this is to disable all labels icons except your custom infowindow or Infobox.
-    zoom: is_mobile ? 7 : 7.9,
+    zoom: is_mobile ? 8 : 7.9,
     zoomControl: true,
     maxZoom: 11,
     minZoom: 6,
