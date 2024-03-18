@@ -423,6 +423,7 @@ function render_infowindow_list(
   let after_sort_and_put_mayor_first;
   _.each(persons_list_for_this_city, (this_person, key) => {
     if (this_person.prime_position == "ראש עיר") {
+      console.log(this_person.prime_position, this_person.name);
       persons_list_for_this_city.splice(key, 1);
       persons_list_for_this_city.unshift(this_person);
     }
