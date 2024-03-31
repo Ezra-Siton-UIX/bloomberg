@@ -1,7 +1,9 @@
 console.clear();
+
 /* set map English vs Hebrew */
 const map_node = document.getElementById("map");
-let rtl = map_node.getAttribute("map_direction");
+let rtl = document.querySelector("[map_direction]").getAttribute("map_direction");
+map_node.setAttribute("map_direction", rtl);
 rtl = rtl == "rtl" ? true : false;
 
 /*#### TOC ####*/
@@ -172,6 +174,9 @@ async function addMarkers() {
     "marker"
   );
 
+  AdvancedMarkerElement.gmpClickable = true;
+
+
   let $show_b_btn;
 
   /* Create markers loop */
@@ -179,7 +184,7 @@ async function addMarkers() {
     let persons_list_for_this_city = get_list_from_city(
       markersOnMap_array[i].city
     );
-    console.log(persons_list_for_this_city.length);
+    //console.log(persons_list_for_this_city.length);
 
     // infoWindow
     const infoWindow = new InfoWindow({
@@ -232,6 +237,17 @@ async function addMarkers() {
         });
         InforObj[0] = infoWindow;
       });
+
+
+      marker.addListener("mouseover", function () {
+        console.log("mouseover")
+      });
+
+      marker.addListener("mouseenter", function () {
+        console.log("mouseenter")
+      });
+
+
 
       google.maps.event.addListener(map, "click", function (event) {
         infoWindow.close();
@@ -286,7 +302,6 @@ async function initMap() {
     },
     clickableIcons: false, // this is to disable all labels icons except your custom infowindow or Infobox.
     zoom: is_mobile ? 6.9 : 7.9,
-    zoomControl: true,
     maxZoom: 11,
     minZoom: 6,
     maxWidth: 300,
@@ -297,6 +312,10 @@ async function initMap() {
   });
 
   let markers_after_init = await addMarkers();
+
+
+  $("div.gm-style-iw").css("padding-right", "12px");
+
 
   //**####### "click" type 2:  show/hide markers(type 1 is setContent inside infoWindow) ##########**//
   const $show_all_btn = document.querySelector("[show_all]");
@@ -381,7 +400,7 @@ function render_infoWindow_contentString(marker_on_the_map, filter = "all") {
   infowindow_content.setAttribute("infoWindow", "infoWindow");
   infowindow_content.style.textAlign = rtl
     ? "right"
-    : "left"; /*multi language */
+  : "left"; /*multi language */
   infowindow_content.style.direction = rtl ? "rtl" : "ltr"; /*multi language */
   infowindow_content.classList.add(rtl ? "info_window_rtl" : "info_window_ltr");
   render_infowindow_city_title(marker_on_the_map, infowindow_content);
@@ -423,7 +442,7 @@ function render_infowindow_list(
   let after_sort_and_put_mayor_first;
   _.each(persons_list_for_this_city, (this_person, key) => {
     if (this_person.prime_position == "ראש עיר") {
-      console.log(this_person.prime_position, this_person.name);
+      //console.log(this_person.prime_position, this_person.name);
       persons_list_for_this_city.splice(key, 1);
       persons_list_for_this_city.unshift(this_person);
     }
@@ -459,11 +478,11 @@ function render_infowindow_list(
 function render_infowindow_person_list_item(this_person, node) {
   let li = document.createElement("li");
   const person_positon = rtl
-    ? this_person.position_he
-    : this_person.position; /*multi language */
+  ? this_person.position_he
+  : this_person.position; /*multi language */
   const person_name = rtl
-    ? this_person.name_he
-    : this_person.name; /*multi language */
+  ? this_person.name_he
+  : this_person.name; /*multi language */
   li.innerHTML = `<span position_name>${person_positon}</span>: ${person_name}`;
   li.setAttribute("infowindow_semester_person_li", this_person.name);
   /* innerHTML  */
@@ -475,8 +494,8 @@ function render_infowindow_person_list_item(this_person, node) {
 function render_infowindow_semester_title(this_semester, node) {
   const $semester_title = document.createElement("h6");
   const content = rtl
-    ? this_semester.name_he
-    : this_semester.name; /*multi language */
+  ? this_semester.name_he
+  : this_semester.name; /*multi language */
   $semester_title.setAttribute("semester_title", content);
   $semester_title.innerHTML = `${content}`;
   node.appendChild($semester_title);
