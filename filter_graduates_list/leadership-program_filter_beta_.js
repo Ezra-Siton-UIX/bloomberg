@@ -1,3 +1,25 @@
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+/* added under webflow as CDN */
+
+
 document.addEventListener("DOMContentLoaded", (event) => {
 
   if(window.location.pathname !== "/cpe/boomboom/index.html"){
@@ -64,7 +86,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const is_mayor = [
       is_en ? "Mayor" : "ראש עיר",
       is_en ? "Mayor of Regional Council" : "ראש מועצה איזורית",
-      is_en ? "Mayohttps://codepen.io/r of Local council" : "ראש מועצה מקומית"
+      is_en ? "Mayor of Local Council" : "ראש מועצה מקומית"
     ]
 
 
@@ -206,10 +228,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       list_js_data.sort("is_mayor");
 
 
-
-
-
-
       uptade_the_number_of_active_filters(false);
 
 
@@ -253,7 +271,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         const this_filter_value = $( this ).attr("data-value");
         is_mayor.forEach(function(is_mayor_v) {
-          if(this_filter_value == is_mayor_v){
+          if(this_filter_value.toLowerCase() == is_mayor_v.toLowerCase()){
             this_data_filter_node.after( "<p class='is_mayor' data-filter='0'>0</p>" );
             compare_all_roles_arr.push(0); /* true */
           }else{
@@ -520,6 +538,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
   }/* close load list js function */
+
+
+
+
 
 
 });/* end DOMContentLoaded */
