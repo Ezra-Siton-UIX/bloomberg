@@ -98,7 +98,8 @@ function set_focus_when_modal_close(){
 const toggle_color_index_btn = document.querySelector("[toggle_color_index_btn]");
 const color_index_content = document.querySelector("[color_index_content]");
 
-toggle_color_index_btn.addEventListener("click", toogle_index_accordion);
+if(toggle_color_index_btn !== null)toggle_color_index_btn.addEventListener("click", toogle_index_accordion);
+
 let is_expanded = false; /* close by deafult */
 
 function toogle_index_accordion(){
