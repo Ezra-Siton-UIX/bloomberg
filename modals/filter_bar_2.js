@@ -37,7 +37,7 @@ graduate_filter_items.forEach((graduate_filter_item) => {
       event.preventDefault();
       // Trigger the button element with a click
       console.log("enter")
-      this.querySelector("label").click();
+      this.click();
     }
   });
 });
