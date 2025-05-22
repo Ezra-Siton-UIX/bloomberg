@@ -56,6 +56,8 @@ document.addEventListener( 'DOMContentLoaded', function () {
     arrows    : false,
     gap         : 10,
 
+
+
     breakpoints : {
       600: {
         fixedWidth : 140,
@@ -82,5 +84,32 @@ document.addEventListener( 'DOMContentLoaded', function () {
   main.mount();
   thumbnails.mount();
   background_carousel.mount();  
+
+  // custom arrows //
+  const splide_custom_next = document.querySelector("[splide_custom_next]");
+  const splide_custom_prev = document.querySelector("[splide_custom_prev]");
+
+
+  if(splide_custom_next !== null && splide_custom_prev !== null){
+    const arrows_control_slider_with_id_of = document.querySelector("[thumbnail-swiper]").getAttribute("id");
+
+    splide_custom_next.setAttribute("aria-label", slider_aria_messages.nextSlideMessage);
+    splide_custom_next.setAttribute("title", slider_aria_messages.nextSlideMessage);
+    splide_custom_next.setAttribute("aria-controls", arrows_control_slider_with_id_of);
+
+    splide_custom_prev.setAttribute("aria-label", slider_aria_messages.prevSlideMessage);
+    splide_custom_prev.setAttribute("title", slider_aria_messages.prevSlideMessage);
+    splide_custom_prev.setAttribute("aria-controls", arrows_control_slider_with_id_of);
+
+    splide_custom_next.addEventListener("click", (event) => {
+      main.go('+1')
+    });
+
+    splide_custom_prev.addEventListener("click", (event) => {
+      main.go('-1')
+    });
+
+  }
+
 
 } );
